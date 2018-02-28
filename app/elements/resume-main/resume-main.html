@@ -1,0 +1,686 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="resume-main">
+  <link rel="import" type="css" href="resume-main.css">
+  <template>
+      <iron-media-query query="screen and (max-width: 600px)" full query-matches="{{mobile}}"></iron-media-query>
+      <paper-card class="contact layout horizontal justified">
+        <paper-icon-item>
+          <div class="avatar" item-icon>
+            <iron-image src="../../images/trent.jpg"></iron-image>         
+          </div>
+          <paper-item-body two-line>
+            <div>Trent Clifton</div>
+            <div secondary><a class="maillink" href="mailto:trent.clifton8@gmail.com">trent.clifton8@gmail.com</a></div>
+          </paper-item-body>
+        </paper-icon-item>
+        <div id="toasttarget" class="flex">
+          <div class="logo">
+            <iron-image style="height:100%; width:100%;" sizing="contain" src="../../images/logo.jpg"></iron-image>    
+          </div>
+        </div>
+      </paper-card>
+      <d3-bubble-viz mobile="{{mobile}}" data="[[resume_sections]]" selected="{{selected}}" activeselection="{{activeselection}}" hovered="{{hovered}}" class="main-viz"></d3-bubble-viz>
+      <div id="contentcontainer" class="inner-container">
+        <paper-card id="contentcard" heading="{{selected}}" class="content">
+          <div class="card-content">
+              <div hidden$="{{!isSelected(selected,'Skills')}}">
+                <paper-item class="carditem card_item_header">
+                  <paper-item-body class="carditembody" two-line>
+                    <div>Frequently used development stack proficiencies</div>
+                    <div secondary>Across a wide range of different projects</div>
+                  </paper-item-body>
+                </paper-item>
+                <div class="layout horizontal wrap">
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>HTML</div>
+                        <div secondary>language</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>CSS3</div>
+                        <div secondary>language</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Javascript</div>
+                        <div secondary>language</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Python</div>
+                        <div secondary>language</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Flask</div>
+                        <div secondary>framework</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Celery</div>
+                        <div secondary>task queue</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Polymer</div>
+                        <div secondary>framework</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>AWS EC2</div>
+                        <div secondary>cloud compute</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>AWS Elastic Beanstalk</div>
+                        <div secondary>cloud hosting</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>AWS S3</div>
+                        <div secondary>cloud storage</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>AWS DynamoDB</div>
+                        <div secondary>cloud nosql</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>AWS Aurora</div>
+                        <div secondary>cloud relational db</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>AWS Redshift</div>
+                        <div secondary>cloud data warehouse</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>MongoDB</div>
+                        <div secondary>database</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>MySQL</div>
+                        <div secondary>database</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Apache</div>
+                        <div secondary>webserver</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>jQuery</div>
+                        <div secondary>library</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>lodash</div>
+                        <div secondary>library</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>d3.js</div>
+                        <div secondary>library</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>three.js</div>
+                        <div secondary>library</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>leaflet.js</div>
+                        <div secondary>library</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Gulp</div>
+                        <div secondary>build tool</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Grunt</div>
+                        <div secondary>build tool</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Sass</div>
+                        <div secondary>language</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Yeoman</div>
+                        <div secondary>tool</div>
+                      </paper-item-body>
+                  </paper-item>
+                </div>
+                <div class="section_seperator"></div>
+                <paper-item class="carditem card_item_header">
+                  <paper-item-body class="carditembody" two-line>
+                    <div>Less frequently used development stack proficiencies</div>
+                  </paper-item-body>
+                </paper-item>
+                <div class="layout horizontal wrap">
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Java</div>
+                        <div secondary>language</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>C</div>
+                        <div secondary>language</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Matlab</div>
+                        <div secondary>language</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Backbone</div>
+                        <div secondary>framework</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Splunk</div>
+                        <div secondary>data mining</div>
+                      </paper-item-body>
+                  </paper-item>
+                </div>
+              </div>
+              <div hidden$="{{!isSelected(selected,'About')}}">
+                <paper-item class="carditem card_item_header">
+                  <paper-item-body class="carditembody" two-line>
+                    <div>
+                        <div>General Info and Contact Details</div>
+                    </div>
+                  </paper-item-body>
+                </paper-item>
+                <div class="layout horizontal wrap">
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Trent Clifton</div>
+                        <div secondary>Marina Del Rey, CA</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>818 634 2502</div>
+                        <div secondary>Cell</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div><a class="submaillink" href="mailto:trent.clifton8@gmail.com">trent.clifton8@gmail.com</a></div>
+                        <div secondary>Personal</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div><a class="submaillink" href="../../images/Trent Clifton.pdf" target="_blank">Download</a></div>
+                        <div secondary>Résumé</div>
+                      </paper-item-body>
+                  </paper-item>
+                </div>
+              </div> 
+              <div hidden$="{{!isSelected(selected,'Experience')}}">
+                <paper-item class="carditem card_item_header">
+                  <paper-item-body class="carditembody" two-line>
+                    <div class="layout horizontal">
+                        <div class="flex">Arup</div>
+                        <div>Full Stack Web Developer</div>
+                    </div>
+                    <div secondary>
+                        Los Angeles, CA
+                        <br/>
+                        July 2014 - Present
+                    </div>
+                  </paper-item-body>
+                </paper-item>
+                <div class="carditem largeitem">
+                    Development of internal facing web applications and processes to improve and automate the building industry design process.
+                </div>
+                <div class="carditem largeitem">
+                    Collaboration with external companies to co-develop software for the industry.
+                </div>
+                <div class="carditem largeitem">
+                    Responsible for all phases of the internal application life cycle. Including technical analysis, scope/design, back-end development, front-end development, QA, internal marketing, and production support.
+                </div>
+                <div class="carditem largeitem section_seperator">
+                    Check out the Projects section for a deeper look in to my work at Arup!  
+                </div>
+                <paper-item class="carditem card_item_header">
+                  <paper-item-body class="carditembody" two-line>
+                    <div class="layout horizontal">
+                        <div class="flex">NetApp</div>
+                        <div>Intern</div>
+                    </div>
+                    <div secondary>
+                        Sunnyvale, CA
+                        <br/>
+                        June 2013 - August 2013
+                    </div>
+                  </paper-item-body>
+                </paper-item>
+                <div class="carditem largeitem">
+                    In the space of a 10-week internship, designed and developed a proof of concept mobile application for the NetApp Sales team that enabled mobile visibility to live order status.
+                </div>
+                <div class="carditem largeitem section_seperator">
+                    HTML-Hybrid application implemented in Java, XML, and SQLite.
+                    Integrated with Apple and Google Push Notification services.
+                    Deployed/tested natively across multiple Android/iOS devices.
+                </div>
+                <paper-item class="carditem card_item_header">
+                  <paper-item-body class="carditembody" two-line>
+                    <div class="layout horizontal">
+                        <div class="flex">District Attorney - High Tech Crime Division</div>
+                        <div>Intern</div>
+                    </div>
+                    <div secondary>
+                        Los Angeles, CA
+                        <br/>
+                        May 2012 - August 2012
+                    </div>
+                  </paper-item-body>
+                </paper-item>
+                <div class="carditem largeitem">
+                    Developed a Splunk-based web application for lawyers/investigators to organize, search, and analyze their forensic evidence, which consists of large quantities  of raw data from various sources.
+                </div>
+              </div> 
+              <div hidden$="{{!isSelected(selected,'Projects')}}">
+                <paper-item class="carditem card_item_header">
+                  <paper-item-body class="carditembody" two-line>
+                    <div>
+                        Arup
+                    </div>
+                    <div secondary>
+                        Arup Seismic Hub
+                    </div>
+                  </paper-item-body>
+                </paper-item>
+                 <div class="carditem largeitem">
+                    The flagship project of my career so far, Arup Seismic Hub is a cloud based workflow that drastically compresses the timescale required for Non Linear Time History Analysis.  A notoriously time consuming part of the structural engineering process, a typical NLTHA job can require multiple weeks to go from model generation to insight, which is often too long to wait given the dynamic nature of the design process.  Arup Seismic Hub compresses this process so that the analysis can provide real insight and value in under 48 hours, which is a gamechanger for our team.
+                </div>
+                <div class="section_seperator carditem largeitem">
+                    Front End: HTML5/CSS3/Javascript, Polymer, three.js, Highcharts, Grunt, Sass, Yeoman<br/>Back End: Python, Flask, Bash, AWS S3, AWS Redshift, AWS Lambda, AWS Elastic Beanstalk, Penguin Compute (HPC Cloud)
+                </div>
+                <paper-item class="carditem card_item_header">
+                  <paper-item-body class="carditembody" two-line>
+                    <div>
+                        Arup
+                    </div>
+                    <div secondary>
+                        Frame Generator
+                    </div>
+                  </paper-item-body>
+                </paper-item>
+                 <div class="carditem largeitem">
+                    Frame Generator is an application that allows Arup's structural engineers to rapidly scheme and analyze crude frametypes.  Replacing tedious hand calcs with a 10 second analysis response.  This project includes an API endpoint that I created to allow remote access to structural analysis software.  This tool provides the structural team a unified way of designing frames, and increases the quality of design by allowing the user to weigh the pros and cons of multiple framing solutions on the fly.
+                </div>
+                <div class="section_seperator carditem largeitem">
+                    Front End: HTML5/CSS3/Javascript, Polymer, three.js, Leaflet, Lodash, Grunt, Sass, Yeoman<br/>Back End: Python, Flask, Celery, MongoDB, Strand, Apache 
+                </div>
+                <paper-item class="carditem card_item_header">
+                  <paper-item-body class="carditembody" two-line>
+                    <div>
+                      Arup
+                    </div>
+                    <div secondary>
+                      PM Progress
+                    </div>
+                  </paper-item-body>
+                </paper-item>
+                <div class="carditem largeitem">
+                    PM Progress is an application that helps Project Managers monitor earned value for ongoing projects.  Allowing them to actively track which projects are behind or ahead of schedule, and identify which resources are at risk.
+                </div>
+                <div class="section_seperator carditem largeitem">
+                    Front End: HTML5/CSS3/Javascript, Polymer, Lodash, Grunt, Sass, Yeoman<br/>Back End: Python, Flask, MongoDB, Apache 
+                </div>
+                <paper-item class="carditem card_item_header">
+                  <paper-item-body class="carditembody" two-line>
+                    <div>
+                      Arup
+                    </div>
+                    <div secondary>
+                      Project Metrics
+                    </div>
+                  </paper-item-body>
+                </paper-item>
+                <div class="carditem largeitem">
+                    Project Metrics is an application/exercise to collect and compare metric data from all of Arup's many projects to discover trends and similarities.  The application is used internally and externally, to compare new project leads with existing projects that Arup has completed in order to set pricing and prevent duplication of effort.
+                </div>
+                <div class="section_seperator carditem largeitem">
+                    Front End: HTML5/CSS3/Javascript, Leaflet, jQuery, Underscore<br/>Back End: Python, Flask, MongoDB, Apache 
+                </div>
+              </div> 
+              <div hidden$="{{!isSelected(selected,'Interests')}}">
+                <paper-item class="carditem card_item_header">
+                  <paper-item-body class="carditembody" two-line>
+                    <div>Passions and hobbies</div>
+                    <div secondary>Just to name a few...</div>
+                  </paper-item-body>
+                </paper-item>
+                <div class="layout horizontal wrap">
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Soccer</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Hockey</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Liverpool FC</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>LA Kings</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Surfing</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Guitar</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Vinyl</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Live Music</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Golfing</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>IPA</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Stout</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Sour/Wild Ales</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Good Scotch</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Great Friends</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Family</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Snowboarding</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Ambitious Eater</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Hiking</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Fantasy Football</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Road Trips</div>
+                      </paper-item-body>
+                  </paper-item>
+                </div>
+              </div>
+              <div hidden$="{{!isSelected(selected,'Education')}}">
+                <paper-item class="carditem card_item_header">
+                  <paper-item-body class="carditembody" two-line>
+                    <div class="layout horizontal">
+                        <div style="font-size:12px;" class="flex">Loyola Marymount University</div>
+                        <div style="font-size:12px;">Los Angeles, CA</div>
+                    </div>
+                    <div secondary style="font-size:12px;">
+                        BS in Electrical Engineering with Computer Engineering Emphasis
+                        <br/>
+                        May 10th, 2014
+                    </div>
+                  </paper-item-body>
+                </paper-item>
+                <div class="layout horizontal wrap">
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody">
+                        <div>3.22 GPA</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>NCAA Division I Student Athlete</div>
+                        <div secondary>Men's Soccer</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Men's Soccer All-Academic First Team</div>
+                        <div secondary>
+                            West Coast Conference
+                            <br/>
+                            2013
+                        </div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Commissioner's Honor Roll</div>
+                        <div secondary>
+                            West Coast Conference
+                            <br/>
+                            2010 - 2014
+                        </div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>National Scholar Athlete</div>
+                        <div secondary>2010 - 2014</div>
+                      </paper-item-body>
+                  </paper-item>
+                  <paper-item class="carditem">
+                      <paper-item-body class="carditembody" two-line>
+                        <div>Men's Soccer Champion</div>
+                        <div secondary>
+                            West Coast Conference
+                            <br/>
+                            2010, 2013
+                        </div>
+                      </paper-item-body>
+                  </paper-item>
+                </div>
+              </div>    
+          </div>
+          <paper-icon-button class="close-section" on-tap="close_content" mini="true" icon="close"></paper-icon-button>
+          </div>
+      </div>
+      <paper-toast horizontal-align="right" vertical-align="top" class="capsule" id="sectionToast">{{hovered}}</paper-toast>
+  </template>
+</dom-module>
+<script>
+  (function () {
+    Polymer({
+      is: "resume-main",
+      properties: {
+          hovered: {
+            type: String,
+            value: "",
+            observer: "toastHandler"
+          },
+          activeselection: {
+            type: Boolean,
+            value: false
+          },
+          selected: {
+            type: String,
+            value: ""
+          },
+          resume_sections: {
+            type: Array,
+            value: [
+                {"id": "Skills", "group": "right", "position": 1, "color": "#009688"}, 
+                {"id": "About", "group": "left", "position": -1, "color": "#009688"}, 
+                {"id": "Experience", "group": "right", "position": 0, "color": "#009688"},  
+                {"id": "Projects", "group": "right", "position": -1, "color": "#009688"},
+                {"id": "Interests", "group": "left", "position": 0, "color": "#009688"}, 
+                {"id": "Education", "group": "left", "position": 1, "color": "#009688"}, 
+              ],
+            readOnly: true
+          },
+
+          animationConfig: {
+            value: function() {
+              return {
+                'entry': [
+                  {name: 'scale-up-animation', node: this.$.contentcontainer, axis: 'x'},
+                  {name: 'scale-up-animation', node: this.$.contentcard, axis: 'y', timing: {delay: 500}},
+                ],
+                'exit': [
+                  //{name: 'scale-down-animation', node: this.$.contentcard, axis: 'y'},
+                  {name: 'scale-down-animation', node: this.$.contentcontainer, axis: 'x'},
+                ]
+              }
+            }
+          }
+      },
+      attached: function() {
+        this.$.sectionToast.fitInto = toasttarget;
+      },
+      observers: [
+        'selection_changed(activeselection)',
+        'selected_section_changed(selected)'
+      ],
+      behaviors: [
+        Polymer.NeonAnimationRunnerBehavior,
+        Polymer.IronResizableBehavior
+      ],
+      listeners: {
+        'neon-animation-finish': '_onNeonAnimationFinish',
+        'iron-resize': '_onIronResize'
+      },
+      _onIronResize: function() {
+        this.set('animationConfig', (this.mobile) ? 
+          {'entry': [
+            {name: 'scale-up-animation', node: this.$.contentcontainer, axis: 'y'},
+            {name: 'scale-up-animation', node: this.$.contentcard, axis: 'x', timing: {delay: 500}},
+          ],
+          'exit': [
+            //{name: 'scale-down-animation', node: this.$.contentcard, axis: 'y'},
+            {name: 'scale-down-animation', node: this.$.contentcontainer, axis: 'y'},
+          ]} : 
+          {'entry': [
+            {name: 'scale-up-animation', node: this.$.contentcontainer, axis: 'x'},
+            {name: 'scale-up-animation', node: this.$.contentcard, axis: 'y', timing: {delay: 500}},
+          ],
+          'exit': [
+            //{name: 'scale-down-animation', node: this.$.contentcard, axis: 'y'},
+            {name: 'scale-down-animation', node: this.$.contentcontainer, axis: 'x'},
+          ]});
+      },
+      isSelected: function(_selectedChange, key) {
+          return key === this.selected
+      },
+      close_content: function() {
+          this.selected = "";
+          this.playAnimation('exit');
+      },
+      selected_section_changed: function(_selectedChange) {
+        if (this.selected !== "") {
+          //this.$.contentcard.style.background = _.find(this.resume_sections, function(d) {return d.id === this.selected},this).color;
+        }
+      },
+      selection_changed: function(_activeselectionChange) {
+        if (this.activeselection) {
+          this.$.contentcontainer.style.display = "block";
+          this.playAnimation('entry');
+        }
+      },
+      _onNeonAnimationFinish: function() {
+        if (this.selected === "") {
+          this.$.contentcontainer.style.display = "none";
+          this.activeselection = false;
+        }
+      },
+      toastHandler: function(hovered_) {
+        if (this.hovered !== "") {
+          this.$.sectionToast.open();
+        }
+        else {
+          this.$.sectionToast.close();
+        }
+
+      }
+    });
+  })();
+</script>

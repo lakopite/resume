@@ -1,0 +1,1 @@
+!function(a){"use strict";var b=a.querySelector("#app");b.appName="Trent Clifton",b.addEventListener("template-bound",function(){console.log("App Initialized")})}(wrap(document));

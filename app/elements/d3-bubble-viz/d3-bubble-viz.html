@@ -1,0 +1,218 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="d3-bubble-viz">
+  <link rel="import" type="css" href="d3-bubble-viz.css">
+  <template>
+    <div id="viz"></div>
+  </template>
+</dom-module>
+<script>
+  (function () {
+    Polymer({
+      is: "d3-bubble-viz",
+      
+      //editable properties for a d3-bubble-viz element
+      properties: {
+        hovered: {
+            type: String,
+            value: "",
+            notify: true,
+        },
+        activeselection: {
+          type: Boolean,
+          notify: true
+        },
+        selected: {
+          type: String,
+          value: "",
+          notify: true
+        },
+        data: {
+          type: Object,
+          value: []
+        },
+        nodes: {
+          type: Array,
+          value: []
+        },
+        width: {
+          type: Number
+        },
+        height: {
+          type: Number
+        },
+        center: {
+          type: Number
+        },
+        defaultRadius: {
+          type: Number,
+          value: 25
+        },
+        gravity: {
+          type: Number,
+          value: -0.01
+        },
+        damper: {
+          type: Number,
+          value: 0.5
+        },
+        fillColor: {
+          type: String,
+          value: "#888888"
+        },
+        strokeColor: {
+          type: String,
+          value: "#FFFFFF"
+        }
+      },
+      behaviors: [
+        Polymer.IronResizableBehavior
+      ],
+      listeners: {
+        'iron-resize': '_onIronResize',
+      },
+      observers: [
+        'selection_change(activeselection)'
+      ],
+      //logic to run when d3-bubble-viz is created.
+      attached: function() {
+        //initialize the viz to size of the container
+        this.setSize();
+        
+        //initialize the nodes
+        _.forEach(this.data, function(d) {
+          this.nodes.push({
+            id: d["id"],
+            original: d,
+            radius: this.defaultRadius,
+            x: Math.random() * this.width,
+            y: Math.random() * this.height
+          });
+        },this);
+
+        //initialize the viz
+        this.visual = d3.select("#viz").append("svg")
+          .attr('height',this.height)
+          .attr('width',this.width)
+          .attr('id','svg_visual');
+
+        //initialize the circles for each node
+        this.circles = this.visual.selectAll('circle')
+          .data(this.nodes, function(d) {
+            return d.id
+          });
+
+        var that=this;
+        this.circles.enter().append("circle")
+          .attr("r",this.defaultRadius*10)
+          .style("fill", function(d) {return d.original.color})
+          .attr("stroke-width", 3)
+          .attr("stroke", function(d) {return that.strokeColor})
+          .attr("id", function(d) {return d['id']})
+          .attr("opacity", 0.5)
+          .on("mouseover", function(d,i) {return that.show_details(d,i,this)})
+          .on("mouseout", function(d,i) {return that.hide_details(d,i,this)})
+          .on("mouseup", function(d,i) {return that.go_section(d,i,this)});
+
+        this.engage();
+        this.start();
+      },
+
+      //functions to monitor and set size on window resize
+
+      _onIronResize: function() {
+        if (this.visual) {
+          this.setSize();
+          this.visual.attr('width',this.width).attr('height',this.height)
+          this.force.size([this.width, this.height])
+          this.force.start();
+        }
+      },
+
+      setSize: function() {
+        this.width = this.$.viz.clientWidth - 5;
+        this.height = this.$.viz.clientHeight - 5;
+        this.center = {x: this.width/2, y: this.height/2}
+      },
+
+      //functions to control bubble viz
+      charge: function(d) {
+        return (d.radius === 0) ? 0 : -Math.pow(d.radius,2.2);  
+      },
+      engage: function() {
+        this.force = d3.layout.force()
+          .nodes(this.nodes)
+          .size([this.width,this.height]);
+      },
+      move_bubbles: function(_alpha) {
+        if (this.activeselection) {
+            if (this.mobile) {
+              return function(d) {
+                var menuY = (d.original.group === "left") ? 62.5 : this.height - 62.5;
+                //var menuX = (d.original.group === "left") ? this.center.x / 4 : this.width - (this.center.x/4);
+                var menuX = this.center.x - (this.center.x/2) * d.original.position;
+                d.x = d.x + (menuX - d.x) * (this.damper + 0.02) * _alpha;
+                d.y = d.y + (menuY - d.y) * (this.damper + 0.02) * _alpha;
+              }.bind(this)
+            }
+            return function(d) {
+              var menuX = (d.original.group === "left") ? 62.5 : this.width - 62.5;
+              //var menuX = (d.original.group === "left") ? this.center.x / 4 : this.width - (this.center.x/4);
+              var menuY = this.center.y - (this.center.y/2) * d.original.position;
+              d.x = d.x + (menuX - d.x) * (this.damper + 0.02) * _alpha;
+              d.y = d.y + (menuY - d.y) * (this.damper + 0.02) * _alpha;
+            }.bind(this)
+        }
+        return function(d) {
+          d.x = d.x + (this.center.x - d.x) * (this.damper + 0.02) * _alpha;
+          d.y = d.y + (this.center.y - d.y) * (this.damper + 0.02) * _alpha;
+        }.bind(this)
+      },
+      applyForce: function() {
+          this.force.gravity(this.gravity)
+          .charge(this.charge)
+          .friction(0.9)
+          .on('tick', function(e) {
+            return this.circles.each(this.move_bubbles(e.alpha))
+              .attr("cx", function(d) {return d.x})
+              .attr("cy", function(d) {return d.y});
+          }.bind(this));
+
+        this.force.start();
+        this.circles.transition().duration(2000)
+          .attr("opacity", 1)
+          .attr("r", function(d) { return d.radius });
+      },
+      start: function() {
+        
+        _.forEach(this.nodes, function(n) {
+          n.radius = this.defaultRadius;
+        },this);
+        
+        this.applyForce();
+      },
+      show_details: function(d,i,bubble) {
+        d3.select(bubble).style("fill", function(d){return '#FFF'});
+        d3.select(bubble).attr("stroke", function(d){return d.original.color});
+        d3.select(bubble).attr("stroke-width", 10);
+        this.set('hovered',bubble.id);
+      },
+      hide_details: function(d,i,bubble) {
+        d3.select(bubble).style("fill", function(d){return d.original.color});
+        d3.select(bubble).attr("stroke", this.strokeColor);
+        d3.select(bubble).attr("stroke-width", 3);
+        this.set('hovered',"");
+      },
+      go_section: function(d,i,bubble) {
+        this.set('selected',bubble.id);
+        this.set('activeselection',true);
+      },
+      selection_change: function(_activeselectionChange) {
+        if (this.visual) {
+          this.applyForce();
+        }
+      }
+
+    });
+  })();
+</script>
